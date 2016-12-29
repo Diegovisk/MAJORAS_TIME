@@ -29,14 +29,14 @@ h2{
   font-weight: normal;
   opacity: 0;
   transition: opacity 0.8s;
-  font-size: 75px;
+  font-size: 65px;
   text-rendering: optimizeLegibility;
 }
 
   /*centralization*/
 div.center{
   height: 200px;
-  line-height: 800px;
+  line-height: 875px;
 
   text-align: center;
 }
@@ -44,5 +44,5 @@ div.center{
 span{
   display: inline-block;
   vertical-align: middle;
-  line-height: 10px;
+  line-height: 0px;
 }
