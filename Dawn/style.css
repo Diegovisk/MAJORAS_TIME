@@ -1,3 +1,14 @@
+@font-face{
+  font-family: narrow;
+  src: url(arial-narrow.ttf);
+}
+
+@font-face{
+  font-family: narrowBold;
+  src: url(arial-narrow-bold.ttf);
+}
+
 h1{
   color: white;
+  font-family: narrow;
 }
