@@ -29,7 +29,7 @@ h2{
   font-weight: normal;
   opacity: 0;
   transition: opacity 0.8s;
-  font-size: 65px;
+  font-size: 55px;
   text-rendering: optimizeLegibility;
 }
 h2.bottom{

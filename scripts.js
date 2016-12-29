@@ -21,21 +21,20 @@ window.onload = function(){
   var middle='delayedMainTitle';
   var bottom='delayedDownerTitle';
   var day;
-
+  var today=dayNumber();
   DawnOfANewDay();
-
     document.getElementById(top).innerHTML='Dawn of';
 
-      if(dayNumber()==1){
+      if(today==1){
         day='First';
-      }else if(dayNumber()==2){
+      }else if(today==2){
         day='Second';
-      }else if(dayNumber()==3){
+      }else if(today==3){
         day='Third';
-      }else if(dayNumber()==366){
+      }else if((today==365)||(today==366)){
         day='Final';
       }else{
-        day=dayNumber()+'th';
+        day=today+'th';
       }
       document.getElementById(middle).innerHTML='The '+day+' Day';
 
@@ -67,7 +66,6 @@ function hoursRemain(){
   }else{
     hour=8760;
   }
-  
   hour-=today;
   return hour;
 }
