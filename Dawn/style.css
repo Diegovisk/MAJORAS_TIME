@@ -1,14 +1,44 @@
 @font-face{
-  font-family: narrow;
+  font-family: arialnarrow;
   src: url(arial-narrow.ttf);
 }
 
 @font-face{
-  font-family: narrowBold;
+  font-family: arialnarrowBold;
   src: url(arial-narrow-bold.ttf);
 }
 
+/*observe que aqui, ponho incialmente a opacity em 0, ao passo que a transição
+  irá reverter, com a ajuda do script.js*/
 h1{
   color: white;
-  font-family: narrow;
+  font-family: arialnarrowBold;
+  opacity: 0;
+  font-weight: bold;
+  transition: opacity 0.8s;
+  font-size: 150px;
+}
+
+h2{
+  color: white;
+  font-family: arialnarrow;
+  font-weight: normal;
+  opacity: 0;
+  transition: opacity 0.8s;
+  font-size: 50px;
+}
+
+/*centralização, um pouco modificada para deixar realmente centralizada,
+  diferente do original, questão de estética*/
+div{
+  height: 200px;
+  line-height: 800px;
+
+  text-align: center;
+}
+
+span{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 10px;
 }
