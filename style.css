@@ -32,6 +32,9 @@ h2{
   font-size: 65px;
   text-rendering: optimizeLegibility;
 }
+h2.bottom{
+  transition: opacity 4s;
+}
 
   /*centralization*/
 div.center{
