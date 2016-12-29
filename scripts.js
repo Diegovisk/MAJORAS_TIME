@@ -1,25 +1,20 @@
 function DawnOfANewDay() {
   var audio = new Audio('Dawn-of-a-new-day.mp3');
-  // setTimeout para dar delay de inicio e ficar de acordo com o original
-  // que no qual só toca quando o título principal aparece, com milésimos
-  // de segundos de antecedência (no original)
+  //setTimeout to delay audio start, to make it more like the original
   setTimeout(function(){
     audio.play();
   },800)
 }
 
-//fadeIn para esmaecer entrada dos textos, on qual pega em seu estilo (css)
-//para invocar o método de preenchimento de opacidade, pela sua referência,
-//um por vez, de Id
+//fade-in for texts, in which uses css to invoke "fill opacity" method by your reference,
+//one by one per Id
 function fadeIn(id, delay){
   var elem = document.getElementById(id);
   setTimeout(function(){
     elem.style.opacity = 1;
   },delay*1000)
 }
-//utiliza da função fadeIn criada com os devidos parâmetros
-// Obs.: Não pode deixar um parâmetro nulo!!! Todos tem que ser usados.
-// Obs.: pode sim, mas fica muito feio
+//using fade-in function, with their respective parameters
 window.onload = function(){
   var remains=hoursRemain();
   var top='delayedUpperTitle';
@@ -48,7 +43,7 @@ window.onload = function(){
   fadeIn(bottom,3);
 }
 
-// pegando o número do dia
+// getting day number
 
 function dayNumber(){
   var now = new Date();
@@ -56,15 +51,14 @@ function dayNumber(){
   var diff = now - start;
   var oneDay = 1000 * 60 * 60 * 24;
   var day = Math.floor(diff / oneDay);
-  // pode ser usado o Math.ceil tbm, mas não vejo certa necessidade
+  // Math.ceil can be used
   return day;
 }
 
-// pegando as horas restantes, precisa pôr em tempo real, por enquanto
-// é só teste
+// getting remaining hours, real time is a must optional setting, this is just a test for now
 
-// update: fazer função pro ano bissexto, nice, fizemos o app bem a tempo de acontecer
-// esse tipo de coisa
+// update: a function for leap years is need, nice, we've developed this app just in time
+// for this to happen
 function hoursRemain(){
   var today=dayNumber()*24;
   var hour=8784;

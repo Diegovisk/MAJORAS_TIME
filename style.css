@@ -19,22 +19,21 @@ h1{
   opacity: 0;
   font-weight: bold;
   transition: opacity 1.25s;
-  font-size: 150px;
+  font-size: 175px;
 }
 
-/*não consigo pôr o "-webkit-font-smoothing: antialiased;" , verificar*/
+/*não consigo pôr o "-webkit-font-smoothing: antialiased;" , verify*/
 h2{
   color: white;
   font-family: arialnarrow;
   font-weight: normal;
   opacity: 0;
   transition: opacity 0.8s;
-  font-size: 50px;
+  font-size: 75px;
   text-rendering: optimizeLegibility;
 }
 
-/*centralização, um pouco modificada para deixar realmente centralizada,
-  diferente do original, questão de estética*/
+  /*centralization*/
 div.center{
   height: 200px;
   line-height: 800px;

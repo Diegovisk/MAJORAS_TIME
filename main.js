@@ -19,7 +19,9 @@ function createWindow () {
 
   // Open the DevTools.
   // win.webContents.openDevTools()
+  // no need for DevTools for now
   win.setMenu(null)
+  //no menus, for now
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -35,7 +37,7 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 
-//após initialization, o evento de sair é Triggered 
+//after initialization, exit app event is triggered
 setTimeout(function(){
   app.quit()
 },10000)
