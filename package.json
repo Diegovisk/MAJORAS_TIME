@@ -1,5 +1,8 @@
 {
-  "name"    : "dawn",
-  "version" : "0.1.5",
-  "main"    : "main.js"
+  "name": "dawn",
+  "version": "0.1.5",
+  "main": "main.js",
+  "dependencies": {
+    "leap-year": "^2.0.1"
+  }
 }

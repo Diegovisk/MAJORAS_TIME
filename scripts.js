@@ -22,6 +22,8 @@ window.onload = function(){
   var bottom='delayedDownerTitle';
   var day;
 
+  DawnOfANewDay();
+
     document.getElementById(top).innerHTML='Dawn of';
 
       if(dayNumber()==1){
@@ -57,11 +59,22 @@ function dayNumber(){
 
 // getting remaining hours, real time is a must optional setting, this is just a test for now
 
-// update: a function for leap years is need, nice, we've developed this app just in time
-// for this to happen
 function hoursRemain(){
   var today=dayNumber()*24;
   var hour=8784;
+  if(isLeapYear()){
+    hour=8784;
+  }else{
+    hour=8760;
+  }
+  
   hour-=today;
   return hour;
+}
+//verifyin if it is a leapYear
+function isLeapYear(){
+  var leapYear= require('leap-year');
+  var d=new Date();
+  var year=d.getFullYear();
+  return leapYear(year);
 }
