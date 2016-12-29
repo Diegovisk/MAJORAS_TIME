@@ -18,7 +18,7 @@ h1{
   font-family: arialnarrowBold;
   opacity: 0;
   font-weight: bold;
-  transition: opacity 0.8s;
+  transition: opacity 1.25s;
   font-size: 150px;
 }
 
@@ -35,7 +35,7 @@ h2{
 
 /*centralização, um pouco modificada para deixar realmente centralizada,
   diferente do original, questão de estética*/
-div{
+div.center{
   height: 200px;
   line-height: 800px;
 

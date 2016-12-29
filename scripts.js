@@ -21,7 +21,41 @@ function fadeIn(id, delay){
 // Obs.: Não pode deixar um parâmetro nulo!!! Todos tem que ser usados.
 // Obs.: pode sim, mas fica muito feio
 window.onload = function(){
-  fadeIn('delayedUpperTitle',1);
-  fadeIn('delayedMainTitle', 2);
-  fadeIn('delayedDownerTitle',3);
+  var top='delayedUpperTitle';
+  var middle='delayedMainTitle';
+  var bottom='delayedDownerTitle';
+  var day;
+  // usar o DRY (Don't Repeat Yourself)
+    document.getElementById(top).innerHTML='Dawn of';
+
+      if(dayNumber()==1){
+        day='First';
+        document.getElementById(middle).innerHTML='The '+day+' Day';
+      }else if(dayNumber()==2){
+        day='Second';
+        document.getElementById(middle).innerHTML='The '+day+' Day';
+      }else if(dayNumber()==3){
+        day='Third';
+        document.getElementById(middle).innerHTML='The '+day+' Day';
+      }else{
+        day=dayNumber();
+        document.getElementById(middle).innerHTML='The '+day+'th Day';
+      }
+
+    document.getElementById(bottom).innerHTML='-24 Hours Remain-';
+  fadeIn(top,1);
+  fadeIn(middle,2);
+  fadeIn(bottom,3);
+}
+
+// pegando o número do dia
+
+function dayNumber(){
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+  // pode ser usado o Math.ceil tbm, mas não vejo certa necessidade
+  return day;
 }
