@@ -63,14 +63,11 @@ function dayNumber(){
 // pegando as horas restantes, precisa pôr em tempo real, por enquanto
 // é só teste
 
-// update: só Deus sabe o que tentei fazer aqui
+// update: fazer função pro ano bissexto, nice, fizemos o app bem a tempo de acontecer
+// esse tipo de coisa
 function hoursRemain(){
-  var today=dayNumber();
-  var year=366;
-  var hour=8760;
-
-  for(;today<year;today--){
-    hour=hour-24;
-  }
+  var today=dayNumber()*24;
+  var hour=8784;
+  hour-=today;
   return hour;
 }
