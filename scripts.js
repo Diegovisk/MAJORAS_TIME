@@ -21,28 +21,28 @@ function fadeIn(id, delay){
 // Obs.: Não pode deixar um parâmetro nulo!!! Todos tem que ser usados.
 // Obs.: pode sim, mas fica muito feio
 window.onload = function(){
+  var remains=hoursRemain();
   var top='delayedUpperTitle';
   var middle='delayedMainTitle';
   var bottom='delayedDownerTitle';
   var day;
-  // usar o DRY (Don't Repeat Yourself)
+
     document.getElementById(top).innerHTML='Dawn of';
 
       if(dayNumber()==1){
         day='First';
-        document.getElementById(middle).innerHTML='The '+day+' Day';
       }else if(dayNumber()==2){
         day='Second';
-        document.getElementById(middle).innerHTML='The '+day+' Day';
       }else if(dayNumber()==3){
         day='Third';
-        document.getElementById(middle).innerHTML='The '+day+' Day';
+      }else if(dayNumber()==366){
+        day='Final';
       }else{
-        day=dayNumber();
-        document.getElementById(middle).innerHTML='The '+day+'th Day';
+        day=dayNumber()+'th';
       }
+      document.getElementById(middle).innerHTML='The '+day+' Day';
 
-    document.getElementById(bottom).innerHTML='-24 Hours Remain-';
+    document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';
   fadeIn(top,1);
   fadeIn(middle,2);
   fadeIn(bottom,3);
@@ -58,4 +58,19 @@ function dayNumber(){
   var day = Math.floor(diff / oneDay);
   // pode ser usado o Math.ceil tbm, mas não vejo certa necessidade
   return day;
+}
+
+// pegando as horas restantes, precisa pôr em tempo real, por enquanto
+// é só teste
+
+// update: só Deus sabe o que tentei fazer aqui
+function hoursRemain(){
+  var today=dayNumber();
+  var year=366;
+  var hour=8760;
+
+  for(;today<year;today--){
+    hour=hour-24;
+  }
+  return hour;
 }
