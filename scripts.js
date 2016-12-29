@@ -60,7 +60,7 @@ function dayNumber(){
 
 function hoursRemain(){
   var totalHours=dayNumber()*24;
-  var hour=8784;
+  var hour;
   if(isLeapYear()){
     hour=8784;
   }else{
