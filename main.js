@@ -18,7 +18,8 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
+  win.setMenu(null)
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -33,6 +34,11 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+//após initialization, o evento de sair é Triggered 
+setTimeout(function(){
+  app.quit()
+},10000)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
