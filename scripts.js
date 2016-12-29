@@ -31,9 +31,7 @@ window.onload = function(){
         day='Second';
       }else if(today==3){
         day='Third';
-      }else if(!(isLeapYear())&&(today==365)){
-        day='Final';
-      }else if((isLeapYear())&&(today==366)){
+      }else if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
         day='Final';
       }else{
         day=today+'th';
@@ -61,14 +59,14 @@ function dayNumber(){
 // getting remaining hours, real time is a must optional setting, this is just a test for now
 
 function hoursRemain(){
-  var today=dayNumber()*24;
+  var totalHours=dayNumber()*24;
   var hour=8784;
   if(isLeapYear()){
     hour=8784;
   }else{
     hour=8760;
   }
-  hour-=today;
+  hour-=totalHours;
   return hour;
 }
 //verifyin if it is a leapYear
