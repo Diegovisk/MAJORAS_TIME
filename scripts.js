@@ -17,9 +17,9 @@ function fadeIn(id, delay){
 //using fade-in function, with their respective parameters
 window.onload = function(){
   var remains=hoursRemain();
-  var top='delayedUpperTitle';
-  var middle='delayedMainTitle';
-  var bottom='delayedDownerTitle';
+  var top='topTitle';
+  var middle='middleTitle';
+  var bottom='bottomTitle';
   var day;
   var today=dayNumber();
   DawnOfANewDay();
@@ -31,7 +31,9 @@ window.onload = function(){
         day='Second';
       }else if(today==3){
         day='Third';
-      }else if((today==365)||(today==366)){
+      }else if(!(isLeapYear())&&(today==365)){
+        day='Final';
+      }else if((isLeapYear())&&(today==366)){
         day='Final';
       }else{
         day=today+'th';
