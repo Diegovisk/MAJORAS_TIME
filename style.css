@@ -50,7 +50,7 @@ div.center{
   margin-left:-250px;*/
 }
 
-span{
+span.inBlock{
   display: inline-block;
   vertical-align: middle;
   line-height: 0px;

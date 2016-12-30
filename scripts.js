@@ -1,3 +1,4 @@
+// NO JQUERY PLEASE, nothing against it, really, it's just a personal taste in this particular project
 function DawnOfANewDay() {
   var audio = new Audio('Dawn-of-a-new-day.mp3');
   //setTimeout to delay audio start, to make it more like the original
@@ -23,9 +24,9 @@ window.onload = function(){
    bottom='bottomTitle';
    today=dayNumber();
     DawnOfANewDay();
+    // this one has to come first, for finalHours() to work
     document.getElementById(top).innerHTML='Dawn of';
-    document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';// this one has to come first, for finalHours() to work
-
+    document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';
       if(today==1){
         day='First';
       }else if(today==2){
@@ -33,9 +34,20 @@ window.onload = function(){
       }else if(today==3){
         day='Third';
       }else if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
-        var tempo=(60*2)+46;
+        var tempo,d,h,m,s;
+        d =new Date();
+        // we need to create callback function to check every second
+        h = d.getHours();
+        m = d.getMinutes();
+        s = d.getSeconds();
         day='Final';
-        finalHours();
+        tempo=(60*2)+46;
+        if(h==23&m>=57&s>=13){
+          document.getElementById(top).innerHTML='Fall of';
+          document.getElementById(bottom).innerHTML='-<span id="time"></span> Time Remaining-';
+          display = document.querySelector('#time');
+          finalHours(tempo,display);
+        }
       }else{
         day=today+'th';
       }
@@ -76,20 +88,13 @@ function isLeapYear(){
   var leapYear= require('leap-year');
   var d=new Date();
   var year=d.getFullYear();
-  return leapYear(year);
+  return leapYear(2014);
 }
 
 function finalHours(duration,display){
-  var audio,today,d,h,m,s,start,minutes,seconds,diff;
+  var audio,start,minutes,seconds,diff;
   start = Date.now();
   audio= new Audio('FinalHours.mp3');
-  today=dayNumber();
-  d =new Date();
-  h = d.getHours();
-  m = d.getMinutes();
-  s = d.getSeconds();
-  if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
-    if(h==23&m==57&s==13){
       audio.play();
       function timer(){
         //get the number of seconds that have elapsed since startTimer() was called
@@ -112,6 +117,4 @@ function finalHours(duration,display){
       //we don't want to wait a full second before the timer starts
       timer();
       setInterval(timer,1000);
-    }
-  }
 }
