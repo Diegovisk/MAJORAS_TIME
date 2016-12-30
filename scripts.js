@@ -36,18 +36,22 @@ window.onload = function(){
       }else if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
         var tempo,d,h,m,s;
         d =new Date();
-        // we need to create callback function to check every second
         h = d.getHours();
-        m = d.getMinutes();
-        s = d.getSeconds();
-        day='Final';
-        tempo=(60*2)+46;
-        if(h==23&m>=57&s>=13){
+        if(h>=12){
           document.getElementById(top).innerHTML='Fall of';
-          document.getElementById(bottom).innerHTML='-<span id="time"></span> Time Remaining-';
-          display = document.querySelector('#time');
-          finalHours(tempo,display);
         }
+        day='Final';
+        // we need to create callback function to check every second, if and only if
+        // the statement for the final day is true
+          timeCheck(function() {
+            tempo=(60*2)+46;
+            document.getElementById(bottom).innerHTML='-<span id="time"></span> Time Remaining-';
+            display = document.querySelector('#time');
+            finalHours(tempo,display);
+            // TODO
+          }, function() {
+            // TODO
+          });
       }else{
         day=today+'th';
       }
@@ -55,6 +59,29 @@ window.onload = function(){
   fadeIn(top,1);
   fadeIn(middle,2);
   fadeIn(bottom,3);
+}
+
+// time check until given especific time
+function timeCheck(finishCallback, waitingCallback) {
+		var d,h,m,s;
+    condition = false;
+    var interval = setInterval(function() {
+        d = new Date();
+        h = d.getHours();
+        m = d.getMinutes();
+        s = d.getSeconds();
+        if (condition) {
+            clearInterval(interval);
+            finishCallback(); 
+        }
+        else {
+            if (h==23&m>=57&s>=13) {
+                condition = true;
+            } else {
+                waitingCallback(); 
+            }
+        }
+    }, 250); 
 }
 
 // getting day number
@@ -88,7 +115,7 @@ function isLeapYear(){
   var leapYear= require('leap-year');
   var d=new Date();
   var year=d.getFullYear();
-  return leapYear(2014);
+  return leapYear(year);
 }
 
 function finalHours(duration,display){
