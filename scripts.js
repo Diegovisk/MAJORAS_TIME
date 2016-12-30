@@ -16,14 +16,15 @@ function fadeIn(id, delay){
 }
 //using fade-in function, with their respective parameters
 window.onload = function(){
-  var remains=hoursRemain();
-  var top='topTitle';
-  var middle='middleTitle';
-  var bottom='bottomTitle';
-  var day;
-  var today=dayNumber();
-  DawnOfANewDay();
+  var remains,top,middle,bottom,day,today;
+   remains=hoursRemain();
+   top='topTitle';
+   middle='middleTitle';
+   bottom='bottomTitle';
+   today=dayNumber();
+    DawnOfANewDay();
     document.getElementById(top).innerHTML='Dawn of';
+    document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';// this one has to come first, for finalHours() to work
 
       if(today==1){
         day='First';
@@ -32,13 +33,13 @@ window.onload = function(){
       }else if(today==3){
         day='Third';
       }else if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
+        var tempo=(60*2)+46;
         day='Final';
+        finalHours();
       }else{
         day=today+'th';
       }
       document.getElementById(middle).innerHTML='The '+day+' Day';
-
-    document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';
   fadeIn(top,1);
   fadeIn(middle,2);
   fadeIn(bottom,3);
@@ -76,4 +77,41 @@ function isLeapYear(){
   var d=new Date();
   var year=d.getFullYear();
   return leapYear(year);
+}
+
+function finalHours(duration,display){
+  var audio,today,d,h,m,s,start,minutes,seconds,diff;
+  start = Date.now();
+  audio= new Audio('FinalHours.mp3');
+  today=dayNumber();
+  d =new Date();
+  h = d.getHours();
+  m = d.getMinutes();
+  s = d.getSeconds();
+  if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
+    if(h==23&m==57&s==13){
+      audio.play();
+      function timer(){
+        //get the number of seconds that have elapsed since startTimer() was called
+        diff = duration - (((Date.now() - start)/1000)|0);
+
+        //does the same job as parseInt truncates the float
+        minutes = (diff/60)|0;
+        seconds = (diff%60)|0;
+
+        minutes = minutes < 10 ? "0"+minutes:minutes;
+        seconds=seconds < 10 ? "0"+seconds:seconds;
+        display.textContent = minutes + ":" + seconds;
+
+        if(diff<=0){
+          // add one second so that the count down starts at the full duration
+          // example 02:46 not 02:45
+          start = Date.now()+1000;
+        }
+      };
+      //we don't want to wait a full second before the timer starts
+      timer();
+      setInterval(timer,1000);
+    }
+  }
 }
