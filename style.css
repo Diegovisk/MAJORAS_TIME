@@ -8,11 +8,10 @@
   src: url(arial-narrow-bold.ttf);
 }
 
-/*Uma das coisas mais decentes de fazer é deixar "responsivo", apesar de ter desabilitado a barra de menu padrão do electron
-  alguém pode querer dar uma olhada no dev tools, e acaba q "quebrando" o estilo em modo janela, ai fica feio*/
+/*Note: fix the style to be responsive with everything, from upgrading to customization (user interface)*/
 
-/*observe que aqui, ponho incialmente a opacity em 0, ao passo que a transição
-  irá reverter, com a ajuda do script.js*/
+  /*here I put the opacity to 0, whereas the transition is going to revert the statement
+    with the help of scripts.js*/
 h1{
   color: white;
   font-family: arialnarrowBold;
@@ -22,7 +21,7 @@ h1{
   font-size: 175px;
 }
 
-/*não consigo pôr o "-webkit-font-smoothing: antialiased;" , verify*/
+/*i can't put "-webkit-font-smoothing: antialiased;" , please verify something similar*/
 h2{
   color: white;
   font-family: arialnarrow;
