@@ -8,8 +8,8 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({backgroundColor: '#000000',icon:'./icon.png',width: 1280,height: 720})
-  win.setFullScreen(false)
+  win = new BrowserWindow({backgroundColor: '#000000',icon:'./icon.png',width: 1280,height: 1000})
+  win.setFullScreen(true)
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -20,7 +20,7 @@ function createWindow () {
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
-  // win.setMenu(null)
+  win.setMenu(null)
   //no menus, for now
 
   // Emitted when the window is closed.

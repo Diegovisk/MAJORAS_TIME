@@ -17,15 +17,22 @@ function fadeIn(id, delay){
 }
 //using fade-in function, with their respective parameters
 window.onload = function(){
-  var remains,top,middle,bottom,day,today;
+  var remains,top,middle,bottom,day,today,d,h;
    remains=hoursRemain();
    top='topTitle';
    middle='middleTitle';
    bottom='bottomTitle';
    today=dayNumber();
     DawnOfANewDay();
+    d =new Date();
+    // need a callback function, like everything else, if the user chooses to do so of course
+    h = d.getHours();
+        if(h>=12){
+          document.getElementById(top).innerHTML='Fall of';
+        }else{
+          document.getElementById(top).innerHTML='Dawn of';
+        }
     // this one has to come first, for finalHours() to work
-    document.getElementById(top).innerHTML='Dawn of';
     document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';
       if(today==1){
         day='First';
@@ -34,12 +41,7 @@ window.onload = function(){
       }else if(today==3){
         day='Third';
       }else if((~(isLeapYear())&(today==365))|((isLeapYear())&(today==366))){
-        var tempo,d,h,m,s;
-        d =new Date();
-        h = d.getHours();
-        if(h>=12){
-          document.getElementById(top).innerHTML='Fall of';
-        }
+        var tempo;
         day='Final';
         // we need to create callback function to check every second, if and only if
         // the statement for the final day is true
