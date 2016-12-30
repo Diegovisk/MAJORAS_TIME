@@ -88,7 +88,7 @@ function isLeapYear(){
   var leapYear= require('leap-year');
   var d=new Date();
   var year=d.getFullYear();
-  return leapYear(2014);
+  return leapYear(year);
 }
 
 function finalHours(duration,display){
