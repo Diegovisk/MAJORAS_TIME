@@ -8,8 +8,8 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({backgroundColor: '#000000'})
-  win.setFullScreen(true)
+  win = new BrowserWindow({backgroundColor: '#000000',icon:'./icon.png',width: 1280,height: 720})
+  win.setFullScreen(false)
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -20,7 +20,7 @@ function createWindow () {
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
-  win.setMenu(null)
+  // win.setMenu(null)
   //no menus, for now
 
   // Emitted when the window is closed.
@@ -38,9 +38,9 @@ function createWindow () {
 app.on('ready', createWindow)
 
 //after initialization, exit app event is triggered
-setTimeout(function(){
-  app.quit()
-},10000)
+// setTimeout(function(){
+//   app.quit()
+// },10000)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
