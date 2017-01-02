@@ -12,6 +12,7 @@
 
   /*here I put the opacity to 0, whereas the transition is going to revert the statement
     with the help of scripts.js*/
+
 h1{
   color: white;
   font-family: arialnarrowBold;
@@ -49,6 +50,16 @@ div.center{
   margin-top:-500px;
   margin-left:-250px;*/
 }
+ 
+#info{
+  font-family: arialnarrow;
+  margin:10px auto;
+  width:100%;
+  text-align:center;
+  color:#fff;
+  position: absolute;
+  bottom:0;
+} 
 
 span.inBlock{
   display: inline-block;
