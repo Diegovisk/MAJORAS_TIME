@@ -33,6 +33,7 @@ h2{
   text-rendering: optimizeLegibility;
 }
 h2.bottom{
+  line-height: 100px;
   transition: opacity 3s;
 }
 
@@ -58,6 +59,8 @@ div.center{
   text-align:center;
   color:#fff;
   position: absolute;
+  opacity: 0;
+  transition: opacity 0.8s;
   bottom:0;
 } 
 

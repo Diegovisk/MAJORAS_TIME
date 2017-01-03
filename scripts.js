@@ -13,11 +13,15 @@ function fadeIn(id, delay){
   var elem = document.getElementById(id);
   setTimeout(function(){
     elem.style.opacity = 1;
+    if(id==='info'){
+      elem.style.opacity= 0.15;
+    }
   },delay*1000)
 }
 //using fade-in function, with their respective parameters
 window.onload = function(){
-  var remains,top,middle,bottom,day,today,d,h;
+  var remains,top,middle,bottom,day,today,d,h,exit;
+  exit = 'info';
    remains=hoursRemain();
    top='topTitle';
    middle='middleTitle';
@@ -50,9 +54,11 @@ window.onload = function(){
             document.getElementById(bottom).innerHTML='-<span id="time"></span> Time Remaining-';
             display = document.querySelector('#time');
             finalHours(tempo,display);
-            // TODO
+
           }, function() {
-            // TODO
+            // 01/01/2017 - the CountDownTimer keeps running if the condition for timeCheck is true
+            // please fix 
+            CountDownTimer('01/01/2018 00:00 AM',bottom,false);
           });
       }else{
         day=today+'th';
@@ -61,6 +67,7 @@ window.onload = function(){
   fadeIn(top,1);
   fadeIn(middle,2);
   fadeIn(bottom,3);
+  fadeIn(exit,1);
 }
 
 // time check until given especific time
@@ -85,6 +92,27 @@ function timeCheck(finishCallback, waitingCallback) {
         }
     }, 250); 
 }
+
+//midDayCheck if it's the Dawn or Fall, needs correction
+// function midDayCheck(finishCallback,waitingCallback){
+//   var d,h;
+//   cond = false;
+//   var interval;
+//   interval = setInterval(function(){
+//     d = new Date();
+//     h = d.getHours();
+//     if(cond){
+//       clearInterval(interval);
+//       finishCallback();
+//     }else{
+//       if(h>12){
+//         cond = true;
+//       }else{
+//         waitingCallback();
+//       }
+//     }
+//   },1000);
+// }
 
 // getting day number
 
@@ -121,8 +149,9 @@ function isLeapYear(){
 }
 
 function finalHours(duration,display){
-  var audio,start,minutes,seconds,diff;
+  var audio,start,minutes,seconds,diff,firework;
   start = Date.now();
+  firework = new Audio('FireWorks.mp3');
   audio= new Audio('FinalHours.mp3');
       audio.play();
       function timer(){
@@ -142,8 +171,48 @@ function finalHours(duration,display){
           // example 02:46 not 02:45
           start = Date.now()+1000;
         }
+        if(minutes==0&seconds==0){
+          clearInterval(intervalo);
+          firework.play();
+        }
       };
       //we don't want to wait a full second before the timer starts
       timer();
-      setInterval(timer,1000);
+      intervalo = setInterval(timer,1000);
 }
+// CountDownTimer('01/01/2017 00:00 AM', 'newYear');
+function CountDownTimer(dt, id,showDays){
+    var end,_second,_minute,_hour,_day,timer;
+        end = new Date(dt);
+
+        _second = 1000;
+        _minute = _second * 60;
+        _hour = _minute * 60;
+        _day = _hour * 24;
+
+        function showRemaining() {
+          var now,distance,days,hours,minutes,seconds;
+            now = new Date();
+            distance = end - now;
+            if (distance < 0) {
+                clearInterval(timer);
+                // document.getElementById(id).innerHTML = 'EXPIRED!';
+                return;
+            }
+            days = Math.floor(distance / _day);
+            hours = Math.floor((distance % _day) / _hour);
+            minutes = Math.floor((distance % _hour) / _minute);
+            seconds = Math.floor((distance % _minute) / _second);
+
+            if(showDays){
+            document.getElementById(id).innerHTML ='-' + days + 'Days ';
+            }else{
+              document.getElementById(id).innerHTML = '-';
+            }
+            document.getElementById(id).innerHTML += hours + ' Hours ';
+            document.getElementById(id).innerHTML += minutes + ' Minutes ';
+            document.getElementById(id).innerHTML += seconds + ' Seconds Remains-';
+            // document.getElementById(id).innerHTML = '--';
+        }
+        timer = setInterval(showRemaining, 1000);
+    }
