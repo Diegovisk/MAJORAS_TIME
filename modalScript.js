@@ -24,11 +24,13 @@ window.onclick = function(event){
     }
 }
 
-    // This only work on generic based keyboards, and of course most of them are directed to windows users
-    // we have to keep mac in mind
-// document.onkeyup=function(e){
-//   if(e.altKey && e.which == 79) {
-//     // alert('Keyboard shortcut working!');
-//     modal.style.display = "block";
-//   }
-// }
+// This only work on generic based keyboards, and of course most of them are directed to windows users
+// we have to keep mac in mind
+document.onkeyup=function(e){
+    var x = e.which || e.keyCode;
+  if(x === 79) {
+    modal.style.display = "block";
+  }else if((x === 88) && (modal.style.display === "block")){
+      modal.style.display = "none";
+  }
+}
