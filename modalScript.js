@@ -30,7 +30,7 @@ document.onkeyup=function(e){
     var x = e.which || e.keyCode;
   if(x === 79) {
     modal.style.display = "block";
-  }else if((x === 88) && (modal.style.display === "block")){
+  }else if((x === 88 || x == 27) && (modal.style.display === "block")){
       modal.style.display = "none";
   }
 }

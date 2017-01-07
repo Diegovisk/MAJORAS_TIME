@@ -28,14 +28,13 @@ window.onload = function(){
    bottom='bottomTitle';
    today=dayNumber();
     DawnOfANewDay();
-    d =new Date();
     // need a callback function, like everything else, if the user chooses to do so of course
-    h = d.getHours();
-        if(h>=12){
-          document.getElementById(top).innerHTML='Fall of';
-        }else{
-          document.getElementById(top).innerHTML='Dawn of';
-        }
+    midDayCheck(function(){
+      document.getElementById(top).innerHTML='Fall of';
+    },function(){
+      document.getElementById(top).innerHTML='Dawn of';
+    });
+    
     // this one has to come first, for finalHours() to work
     document.getElementById(bottom).innerHTML='-'+remains+' Hours Remain-';
       if(today==1){
@@ -94,25 +93,25 @@ function timeCheck(finishCallback, waitingCallback) {
 }
 
 //midDayCheck if it's the Dawn or Fall, needs correction
-// function midDayCheck(finishCallback,waitingCallback){
-//   var d,h;
-//   cond = false;
-//   var interval;
-//   interval = setInterval(function(){
-//     d = new Date();
-//     h = d.getHours();
-//     if(cond){
-//       clearInterval(interval);
-//       finishCallback();
-//     }else{
-//       if(h>12){
-//         cond = true;
-//       }else{
-//         waitingCallback();
-//       }
-//     }
-//   },1000);
-// }
+function midDayCheck(finishCallback,waitingCallback){
+  var d,h;
+  cond = false;
+  var interval;
+  interval = setInterval(function(){
+    d = new Date();
+    h = d.getHours();
+    if(cond){
+      clearInterval(interval);
+      finishCallback();
+    }else{
+      if(h>12){
+        cond = true;
+      }else{
+        waitingCallback();
+      }
+    }
+  },250);
+}
 
 // getting day number
 
