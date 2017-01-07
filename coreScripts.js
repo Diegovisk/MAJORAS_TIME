@@ -20,13 +20,27 @@ function fadeIn(id, delay){
 }
 //using fade-in function, with their respective parameters
 window.onload = function(){
-  var remains,top,middle,bottom,day,today,d,h,exit;
-  exit = 'info';
-   remains=hoursRemain();
-   top='topTitle';
-   middle='middleTitle';
-   bottom='bottomTitle';
-   today=dayNumber();
+  var remains,top,middle,bottom,day,today,d,h,exit, timer, timeout, modal;
+      exit = 'info';
+      remains=hoursRemain();
+      top='topTitle';
+      middle='middleTitle';
+      bottom='bottomTitle';
+      today=dayNumber();
+      modal = document.getElementById('menu');
+
+     timeout = function () {
+       if (modal.style.display != "block") {
+      document.getElementById('body').style.cursor = "none";
+       }
+     }
+      timer = setTimeout(timeout, 500);
+      window.onmousemove = function() {
+          clearTimeout(timer);
+          document.getElementById('body').style.cursor = "default";
+          timer = setTimeout(timeout, 500);
+      };
+   
     DawnOfANewDay();
     // need a callback function, like everything else, if the user chooses to do so of course
     midDayCheck(function(){
@@ -96,12 +110,12 @@ function timeCheck(finishCallback, waitingCallback) {
 function midDayCheck(finishCallback,waitingCallback){
   var d,h;
   cond = false;
-  var interval;
-  interval = setInterval(function(){
+  // var interval; this variable was used to clear the interval itself, I have other plans for it
+  setInterval(function(){
     d = new Date();
     h = d.getHours();
     if(cond){
-      clearInterval(interval);
+      // clearInterval(interval);
       finishCallback();
     }else{
       if(h>12){
