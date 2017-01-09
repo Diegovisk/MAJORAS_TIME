@@ -1,11 +1,11 @@
-const {app, BrowserWindow, globalShortcut} = require('electron')
+const {app, BrowserWindow, globalShortcut, Tray, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
+let tray = null
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({backgroundColor: '#000000',icon:'./icon.png',width: 1280,height: 1000})
@@ -20,7 +20,7 @@ function createWindow () {
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
-  win.setMenu(null)
+  // win.setMenu(null)
   //no menus, for now
 
   // Emitted when the window is closed.
@@ -39,6 +39,16 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+app.on('ready', () => {
+  tray = new Tray('./icon.png')
+  const contextMenu = Menu.buildFromTemplate([
+    {label: 'Item1',type: 'radio'},
+    {label: 'Item2',type: 'radio'}
+  ])
+  tray.setToolTip('This is my app.')
+  contextMenu.items[1].checked = false
+  tray.setContextMenu(contextMenu)
+})
 
 //after initialization, exit app event is triggered
 // setTimeout(function(){
