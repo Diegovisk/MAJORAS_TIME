@@ -1,6 +1,6 @@
 // NO JQUERY PLEASE, nothing against it, really, it's just a personal taste in this particular project
 function DawnOfANewDay() {
-  var audio = new Audio('Dawn-of-a-new-day.mp3');
+  var audio = new Audio('./res/sounds/Dawn-of-a-new-day.mp3');
   //setTimeout to delay audio start, to make it more like the original
   setTimeout(function () {
     audio.play();
@@ -162,8 +162,8 @@ function isLeapYear() {
 function finalHours(duration, display) {
   var audio, start, minutes, seconds, diff, firework;
   start = Date.now();
-  firework = new Audio('FireWorks.mp3');
-  audio = new Audio('FinalHours.mp3');
+  firework = new Audio('./res/sounds/FireWorks.mp3');
+  audio = new Audio('./res/sounds/FinalHours.mp3');
   audio.play();
 
   function timer() {

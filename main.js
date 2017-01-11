@@ -7,9 +7,10 @@ const url = require('url')
 let win
 let tray = null
 function createWindow () {
+  var isFullscreen = true;
   // Create the browser window.
-  win = new BrowserWindow({backgroundColor: '#000000',icon:'./icon.png',width: 1280,height: 1000})
-  win.setFullScreen(true)
+  win = new BrowserWindow({backgroundColor: '#000000',icon:'./res/mipmap-hdpi/ic_launcher.png',width: 1280,height: 1000})
+  win.setFullScreen(true);
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -20,9 +21,10 @@ function createWindow () {
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
-  // win.setMenu(null)
+  win.setMenu(null)
   //no menus, for now
-
+  
+  win.setSkipTaskbar(true)
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -30,9 +32,21 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   });
-  globalShortcut.register('CommandOrControl+X', function(){
-    app.quit();
+  globalShortcut.register('CommandOrControl+X', function() {
+    app.quit()
   });
+  globalShortcut.register('CommandOrControl+C', function() {
+    win.minimize(true)
+  })
+  globalShortcut.register('Alt+Enter', function() {
+    if (isFullscreen) {
+      win.setFullScreen(false)
+      isFullscreen = false
+    }else{
+      win.setFullScreen(true)
+      isFullscreen = true
+    }
+  })
 }
 
 // This method will be called when Electron has finished
@@ -40,14 +54,21 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
 app.on('ready', () => {
-  tray = new Tray('./icon.png')
+  tray = new Tray('./res/mipmap-hdpi/ic_launcher.png')
   const contextMenu = Menu.buildFromTemplate([
-    {label: 'Item1',type: 'radio'},
-    {label: 'Item2',type: 'radio'}
+    {label: 'Show app', click: function() {
+      win.show();
+    }},
+    {label: 'Quit', click: function() {
+      app.quit()
+    }}
   ])
-  tray.setToolTip('This is my app.')
+  tray.setToolTip("Majora's Time")
   contextMenu.items[1].checked = false
   tray.setContextMenu(contextMenu)
+  tray.on('double-click', function() {
+    win.show();
+  })
 })
 
 //after initialization, exit app event is triggered
