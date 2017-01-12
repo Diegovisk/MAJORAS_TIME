@@ -2,9 +2,13 @@ const {app, BrowserWindow, globalShortcut, Tray, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 
+// Commentary by Stanley: here, all functions, instances, statements, etc. with semicolon (;), is my doing
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+// We need to store the "id" of the current window to destroy it later on
+var inSession=[],index=0;
 let tray = null
 function createWindow () {
   var isFullscreen = true;
@@ -17,7 +21,8 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-
+  inSession[index] = win;
+  index++;
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
@@ -36,7 +41,7 @@ function createWindow () {
     app.quit()
   });
   globalShortcut.register('CommandOrControl+C', function() {
-    win.minimize(true)
+    inSession[index-1].minimize(true)
   })
   globalShortcut.register('Alt+Enter', function() {
     if (isFullscreen) {
@@ -57,23 +62,32 @@ app.on('ready', () => {
   tray = new Tray('./res/mipmap-hdpi/ic_launcher.png')
   const contextMenu = Menu.buildFromTemplate([
     {label: 'Show app', click: function() {
-      win.show();
+      createWindow();
+      //because we are incrementing the index after the session has been bounded with the current window
+      //we have to jump back two array units to destroy the previous window, after the new one has been created
+      // if we don't do this, the current session/window will be destroyed as soon as created
+      inSession[index-2].destroy();
+      // win.restore();
     }},
     {label: 'Quit', click: function() {
       app.quit()
     }}
   ])
   tray.setToolTip("Majora's Time")
+  //This is for Linux
   contextMenu.items[1].checked = false
   tray.setContextMenu(contextMenu)
   tray.on('double-click', function() {
-    win.show();
+    createWindow();
+    //same thing as before
+    inSession[index-2].destroy();
+    // win.restore();
   })
 })
 
 //after initialization, exit app event is triggered
 // setTimeout(function(){
-//   app.quit()
+//   inSession[index-1].minimize(true)
 // },10000)
 
 // Quit when all windows are closed.

@@ -1,4 +1,5 @@
 // NO JQUERY PLEASE, nothing against it, really, it's just a personal taste in this particular project
+// for logical operations use !== or ===
 function DawnOfANewDay() {
   var audio = new Audio('./res/sounds/Dawn-of-a-new-day.mp3');
   //setTimeout to delay audio start, to make it more like the original
@@ -7,19 +8,7 @@ function DawnOfANewDay() {
   }, 800)
 }
 
-//fade-in for texts, in which uses css to invoke "fill opacity" method by your reference,
-//one by one per Id
-function fadeIn(id, delay) {
-  var elem = document.getElementById(id);
-  setTimeout(function () {
-    elem.style.opacity = 1;
-    if (id === 'info') {
-      elem.style.opacity = 0.15;
-    }
-  }, delay * 1000)
-}
-//using fade-in function, with their respective parameters
-window.onload = function () {
+function mainLoad(){
   var remains, top, middle, bottom, day, today, d, h, exit, timer, timeout, modal;
   exit = 'info';
   remains = hoursRemain();
@@ -30,7 +19,7 @@ window.onload = function () {
   modal = document.getElementById('menu');
 
   timeout = function () {
-    if (modal.style.display != "block") {
+    if (modal.style.display !== "block") {
       document.getElementById('body').style.cursor = "none";
     }
   }
@@ -57,7 +46,7 @@ window.onload = function () {
     day = 'Second';
   } else if (today === 3) {
     day = 'Third';
-  } else if ((~(isLeapYear()) & (today == 365)) | ((isLeapYear()) & (today == 366))) {
+  } else if ((~(isLeapYear()) & (today === 365)) | ((isLeapYear()) & (today === 366))) {
     var tempo;
     day = 'Final';
     // we need to create callback function to check every second, if and only if
@@ -81,6 +70,22 @@ window.onload = function () {
   fadeIn(bottom, 3);
   fadeIn(exit, 1);
 }
+window.onload = function () {
+  mainLoad();
+}
+
+//fade-in for texts, in which uses css to invoke "fill opacity" method by your reference,
+//one by one per Id
+function fadeIn(id, delay) {
+  var elem = document.getElementById(id);
+  setTimeout(function () {
+    elem.style.opacity = 1;
+    if (id === 'info') {
+      elem.style.opacity = 0.15;
+    }
+  }, delay * 1000)
+}
+
 
 // time check until given especific time
 function timeCheck(finishCallback, waitingCallback) {
@@ -95,7 +100,7 @@ function timeCheck(finishCallback, waitingCallback) {
       clearInterval(interval);
       finishCallback();
     } else {
-      if (h == 23 & m >= 57 & s >= 13) {
+      if (h === 23 & m >= 57 & s >= 13) {
         condition = true;
       } else {
         waitingCallback();
