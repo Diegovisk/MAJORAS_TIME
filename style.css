@@ -43,6 +43,11 @@ h2.bottom {
   transition: opacity 3s;
 }
 
+h3 {
+  font-family: arialnarrow;
+  text-shadow: rgba(0, 0, 0, 0.05) 0 0 1px;
+  text-rendering: optimizeLegibility;
+}
 
 /*centralization*/
 

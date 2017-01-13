@@ -31,8 +31,9 @@
     background-color: #fefefe;
     margin: auto;
     /*15% from the top and centered*/
-    padding: 0;
+    padding: 20px;
     border: 1px solid #888;
+    border-radius: 5px;
     width: 50%;
     /*Could be more or less, depending on screen size */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -45,22 +46,22 @@
 @-webkit-keyframes animatetop {
     from {
         top: -300px;
-        opacity: 0
+        opacity: 0;
     }
     to {
         top: 0;
-        opacity: 1
+        opacity: 1;
     }
 }
 
 @keyframes animatetop {
     from {
         top: -300px;
-        opacity: 0
+        opacity: 0;
     }
     to {
         top: 0;
-        opacity: 1
+        opacity: 1;
     }
 }
 
