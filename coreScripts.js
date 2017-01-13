@@ -8,7 +8,7 @@ function DawnOfANewDay() {
   }, 800)
 }
 
-function mainLoad(){
+function mainLoad() {
   var remains, top, middle, bottom, day, today, d, h, exit, timer, timeout, modal;
   exit = 'info';
   remains = hoursRemain();

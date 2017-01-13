@@ -1,4 +1,10 @@
-const {app, BrowserWindow, globalShortcut, Tray, Menu} = require('electron')
+const {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  Tray,
+  Menu
+} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -9,13 +15,20 @@ const url = require('url')
 let win
 // We need to store the "id" of the current window to destroy it later on
 // the array always starts with 0, keep that in mind
-var inSession=[],index=0;
+var inSession = [],
+    index = 0;
 let tray = null
-function createWindow () {
+
+function createWindow() {
   var isFullscreen = true;
   // Create the browser window.
-  win = new BrowserWindow({backgroundColor: '#000000',icon:'./res/mipmap-xxxhdpi/ic_launcher.png',width: 1280,height: 1000})
-  
+  win = new BrowserWindow({
+    backgroundColor: '#000000',
+    icon: './res/mipmap-xxxhdpi/ic_launcher.png',
+    width: 1280,
+    height: 1000
+  })
+
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -23,11 +36,12 @@ function createWindow () {
     slashes: true
   }))
 
-  // We need this to bypass the taskbar error
+  // We need this to bypass the taskbar error on windows, and it doesn't hurt 
+  // to make sure it works on all OSs
   // watch those 10 milliseconds, they're precious
-  setTimeout(function(){
-    inSession[index-1].setFullScreen(true);
-  },10)
+  setTimeout(function () {
+    inSession[index - 1].setFullScreen(true);
+  }, 10)
 
   inSession[index] = win;
   index++;
@@ -36,7 +50,7 @@ function createWindow () {
   // no need for DevTools for now
   win.setMenu(null)
   //no menus, for now
-  
+
   win.setSkipTaskbar(true)
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -45,17 +59,17 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   });
-  globalShortcut.register('CommandOrControl+X', function() {
+  globalShortcut.register('CommandOrControl+X', function () {
     app.quit()
   });
-  globalShortcut.register('CommandOrControl+C', function() {
-    inSession[index-1].minimize(true)
+  globalShortcut.register('CommandOrControl+C', function () {
+    inSession[index - 1].minimize(true)
   })
-  globalShortcut.register('Alt+Enter', function() {
+  globalShortcut.register('Alt+Enter', function () {
     if (isFullscreen) {
       win.setFullScreen(false)
       isFullscreen = false
-    }else{
+    } else {
       win.setFullScreen(true)
       isFullscreen = true
     }
@@ -71,27 +85,41 @@ app.on('ready', createWindow)
 // R: To restart the transition/animation.
 // "But you can use JavaScript or JQUERY to do this". R => yeah...
 app.on('ready', () => {
-  tray = new Tray('./res/mipmap-hdpi/ic_launcher.png')
+  var iconStatic;
+  if (process.platform === 'darwin') {
+    iconStatic = path.join(__dirname, 'res/mipmap-hdpi/', 'ic_launcher.png')
+  } else if (process.platform === 'win32') {
+    iconStatic = path.join(__dirname, 'res/windowsIco/', 'ic_launcher.ico')
+  } else if (process.platform === 'linux') {
+    iconStatic = path.join(__dirname, 'res/mipmap-mdpi/', 'ic_launcher.png')
+  }
+  tray = new Tray(iconStatic)
   const contextMenu = Menu.buildFromTemplate([
-    {label: 'Show app', click: function() {
-      createWindow();
-      //because we are incrementing the index after the session has been bounded with the current window
-      //we have to jump back two array units to destroy the previous window, after the new one has been created
-      // if we don't do this, the current session/window will be destroyed as soon as created
-      inSession[index-2].destroy();
-    }},
-    {label: 'Quit', click: function() {
-      app.quit()
-    }}
+    {
+      label: 'Show app',
+      click: function () {
+        createWindow();
+        //because we are incrementing the index after the session has been bounded with the current window
+        //we have to jump back two array units to destroy the previous window, after the new one has been created
+        // if we don't do this, the current session/window will be destroyed as soon as created
+        inSession[index - 2].destroy();
+      }
+    },
+    {
+      label: 'Quit',
+      click: function () {
+        app.quit();
+      }
+    }
   ])
   tray.setToolTip('Majora\'s Time')
   //This is for Linux
   contextMenu.items[1].checked = false
   tray.setContextMenu(contextMenu)
-  tray.on('double-click', function() {
+  tray.on('double-click', function () {
     createWindow();
     //same thing as before
-    inSession[index-2].destroy();
+    inSession[index - 2].destroy();
     // win.restore();
   })
 })

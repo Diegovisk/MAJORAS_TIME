@@ -64,6 +64,28 @@
     }
 }
 
+@-webkit-keyframes animatetopRe {
+    from {
+        top: 0;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
+    }
+}
+
+@keyframes animatetopRe {
+    from {
+        top: 0;
+        opacity: 1;
+    }
+    to {
+        top: -300px;
+        opacity: 0;
+    }
+}
+
 
 /* The Close Button */
 
