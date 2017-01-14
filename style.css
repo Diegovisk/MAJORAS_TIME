@@ -1,11 +1,11 @@
 @font-face {
   font-family: arialnarrow;
-  src: url(arial-narrow.ttf);
+  src: url(./res/fonts/arial-narrow.ttf);
 }
 
 @font-face {
   font-family: arialnarrowBold;
-  src: url(arial-narrow-bold.ttf);
+  src: url(./res/fonts/arial-narrow-bold.ttf);
 }
 
 
@@ -15,20 +15,7 @@
 /*here I put the opacity to 0, whereas the transition is going to revert the statement
     with the help of scripts.js*/
 
-h1 {
-  color: white;
-  font-family: arialnarrowBold;
-  opacity: 0;
-  font-weight: bold;
-  transition: opacity 1.25s;
-  font-size: 175px;
-  letter-spacing: -5px;
-}
-
-
-/*I can't put "-webkit-font-smoothing: antialiased;" , please verify something similar*/
-
-h2 {
+h2.topper {
   color: white;
   font-family: arialnarrow;
   font-weight: normal;
@@ -36,6 +23,16 @@ h2 {
   transition: opacity 0.8s;
   font-size: 55px;
   text-rendering: optimizeLegibility;
+}
+
+h1.middle {
+  color: white;
+  font-family: arialnarrowBold;
+  opacity: 0;
+  font-weight: bold;
+  transition: opacity 1.25s;
+  font-size: 175px;
+  letter-spacing: -5px;
 }
 
 h2.bottom {

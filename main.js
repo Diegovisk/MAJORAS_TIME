@@ -26,7 +26,8 @@ function createWindow() {
     backgroundColor: '#000000',
     icon: './res/mipmap-xxxhdpi/ic_launcher.png',
     width: 1280,
-    height: 1000
+    height: 1000,
+    resizable: false,
   })
 
   // and load the index.html of the app.
@@ -35,23 +36,20 @@ function createWindow() {
     protocol: 'file:',
     slashes: true
   }))
-
-  // We need this to bypass the taskbar error on windows, and it doesn't hurt 
-  // to make sure it works on all OSs
-  // watch those 10 milliseconds, they're precious
-  setTimeout(function () {
-    inSession[index - 1].setFullScreen(true);
-  }, 10)
-
+  
   inSession[index] = win;
   index++;
   // Open the DevTools.
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
   // no need for DevTools for now
-  win.setMenu(null)
+  // win.setMenu(null)
   //no menus, for now
 
   win.setSkipTaskbar(true)
+
+  // This guys has to come after setSkipTaskbar
+  inSession[index - 1].setFullScreen(true);
+
   // Emitted when the window is closed.
   win.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -67,10 +65,10 @@ function createWindow() {
   })
   globalShortcut.register('Alt+Enter', function () {
     if (isFullscreen) {
-      win.setFullScreen(false)
+      inSession[index-1].setFullScreen(false)
       isFullscreen = false
     } else {
-      win.setFullScreen(true)
+      inSession[index-1].setFullScreen(true)
       isFullscreen = true
     }
   })
