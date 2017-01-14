@@ -16,7 +16,7 @@ let win
 // We need to store the "id" of the current window to destroy it later on
 // the array always starts with 0, keep that in mind
 var inSession = [],
-    index = 0;
+    id = inSession.length-1;
 let tray = null
 
 function createWindow() {
@@ -37,18 +37,23 @@ function createWindow() {
     slashes: true
   }))
   
-  inSession[index] = win;
-  index++;
+  // We don't want to create more elements for the same
+  // thing, so let us not overload our RAM usage, per se :))))
+  inSession[id] = win;
+  if(id >= 0){
+    inSession.splice(id,1);
+  }
+  id--;
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
   // no need for DevTools for now
-  // win.setMenu(null)
+  win.setMenu(null)
   //no menus, for now
 
   win.setSkipTaskbar(true)
 
   // This guys has to come after setSkipTaskbar
-  inSession[index - 1].setFullScreen(true);
+  inSession[id+1].setFullScreen(true);
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -61,14 +66,14 @@ function createWindow() {
     app.quit()
   });
   globalShortcut.register('CommandOrControl+C', function () {
-    inSession[index - 1].minimize(true)
+    inSession[id + 1].minimize(true)
   })
   globalShortcut.register('Alt+Enter', function () {
     if (isFullscreen) {
-      inSession[index-1].setFullScreen(false)
+      inSession[id+1].setFullScreen(false)
       isFullscreen = false
     } else {
-      inSession[index-1].setFullScreen(true)
+      inSession[id+1].setFullScreen(true)
       isFullscreen = true
     }
   })
@@ -100,7 +105,7 @@ app.on('ready', () => {
         //because we are incrementing the index after the session has been bounded with the current window
         //we have to jump back two array units to destroy the previous window, after the new one has been created
         // if we don't do this, the current session/window will be destroyed as soon as created
-        inSession[index - 2].destroy();
+        inSession[id + 2].destroy();
       }
     },
     {
@@ -117,7 +122,7 @@ app.on('ready', () => {
   tray.on('double-click', function () {
     createWindow();
     //same thing as before
-    inSession[index - 2].destroy();
+    inSession[id + 2].destroy();
     // win.restore();
   })
 })
