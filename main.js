@@ -12,11 +12,15 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win // Main window
+let modalSettings // Modal/Settings window
+
 // We need to store the "id" of the current window to destroy it later on
 // the array always starts with 0, keep that in mind
 var inSession = [],
     id = inSession.length-1;
+
+// Tray
 let tray = null
 
 function createWindow() {
@@ -40,20 +44,20 @@ function createWindow() {
   // We don't want to create more elements for the same
   // thing, so let us not overload our RAM usage, per se :))))
   inSession[id] = win;
-  if(id >= 0){
-    inSession.splice(id,1);
+  if (id >= 0) {
+    inSession.splice(id, 1);
   }
   id--;
   // Open the DevTools.
   // win.webContents.openDevTools()
   // no need for DevTools for now
-  win.setMenu(null)
+  win.setMenu(null);
   //no menus, for now
 
-  win.setSkipTaskbar(true)
+  win.setSkipTaskbar(true);
 
-  // This guys has to come after setSkipTaskbar
-  inSession[id+1].setFullScreen(true);
+  // This guy has to come after setSkipTaskbar
+  inSession[id + 1].setFullScreen(true);
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -63,20 +67,44 @@ function createWindow() {
     win = null
   });
   globalShortcut.register('CommandOrControl+X', function () {
-    app.quit()
+    app.quit();
   });
   globalShortcut.register('CommandOrControl+C', function () {
-    inSession[id + 1].minimize(true)
+    inSession[id + 1].minimize(true);
   })
   globalShortcut.register('Alt+Enter', function () {
     if (isFullscreen) {
-      inSession[id+1].setFullScreen(false)
-      isFullscreen = false
+      inSession[id + 1].setFullScreen(false);
+      isFullscreen = false;
     } else {
-      inSession[id+1].setFullScreen(true)
-      isFullscreen = true
+      inSession[id + 1].setFullScreen(true);
+      isFullscreen = true;
     }
   })
+}
+
+function createSettingsWindow() {
+  // cheking if it's already open
+  if (modalSettings) {
+    return;
+  }
+
+  modalSettings = new BrowserWindow({
+    frame: false,
+    height: 800,
+    resizable: false,
+    width: 800
+  });
+
+  modalSettings.loadURL(url.format({
+    pathname: path.join(__dirname, 'modalSettings.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  modalSettings.on('closed', function () {
+    modalSettings = null;
+  });
 }
 
 // This method will be called when Electron has finished
@@ -90,14 +118,20 @@ app.on('ready', createWindow)
 app.on('ready', () => {
   var iconStatic;
   if (process.platform === 'darwin') {
-    iconStatic = path.join(__dirname, 'res/mipmap-hdpi/', 'ic_launcher.png')
+    iconStatic = path.join(__dirname, 'res/mipmap-hdpi/', 'ic_launcher.png');
   } else if (process.platform === 'win32') {
-    iconStatic = path.join(__dirname, 'res/windowsIco/', 'ic_launcher.ico')
+    iconStatic = path.join(__dirname, 'res/windowsIco/', 'ic_launcher.ico');
   } else if (process.platform === 'linux') {
-    iconStatic = path.join(__dirname, 'res/mipmap-mdpi/', 'ic_launcher.png')
+    iconStatic = path.join(__dirname, 'res/mipmap-mdpi/', 'ic_launcher.png');
   }
-  tray = new Tray(iconStatic)
+  tray = new Tray(iconStatic);
   const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Settings',
+      click: function () {
+        createSettingsWindow();
+      }
+    },
     {
       label: 'Show app',
       click: function () {
@@ -115,10 +149,10 @@ app.on('ready', () => {
       }
     }
   ])
-  tray.setToolTip('Majora\'s Time')
+  tray.setToolTip('Majora\'s Time');
   //This is for Linux
-  contextMenu.items[1].checked = false
-  tray.setContextMenu(contextMenu)
+  contextMenu.items[1].checked = false;
+  tray.setContextMenu(contextMenu);
   tray.on('double-click', function () {
     createWindow();
     //same thing as before
