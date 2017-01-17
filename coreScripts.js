@@ -1,4 +1,4 @@
-// NO JQUERY PLEASE, nothing against it, really, it's just a personal taste in this particular project
+// NO JQUERY PLEASE, nothing against it, really, it's just a personal taste in this particular project 
 // for logical operations use !== or ===
 function DawnOfANewDay() {
   var audio = new Audio('./res/sounds/Dawn-of-a-new-day.mp3');
@@ -9,7 +9,7 @@ function DawnOfANewDay() {
 }
 
 function mainLoad() {
-  var remains, top, middle, bottom, day, today, d, h, exit, timer, timeout, modal;
+  var remains, top, middle, bottom, day, today, d, h, exit, timer, timeout, modal, body;
   exit = 'info';
   remains = hoursRemain();
   top = 'topTitle';
@@ -17,29 +17,37 @@ function mainLoad() {
   bottom = 'bottomTitle';
   today = dayNumber();
   modal = document.getElementById('menu');
+  body = document.getElementById('indexBody');
 
   timeout = function () {
     if (modal.style.display !== "block") {
-      document.getElementById('body').style.cursor = "none";
+      body.style.cursor = "none";
     }
   }
   timer = setTimeout(timeout, 500);
   window.onmousemove = function () {
     clearTimeout(timer);
-    document.getElementById('body').style.cursor = "default";
+    body.style.cursor = "default";
     timer = setTimeout(timeout, 500);
   };
 
   DawnOfANewDay();
-  // need a callback function, like everything else, if the user chooses to do so of course
+  // need a callback function, like everything else, if the user chooses to do so
+  // of course
   midDayCheck(function () {
-    document.getElementById(top).innerHTML = 'Fall of';
+    document
+      .getElementById(top)
+      .innerHTML = 'Fall of';
   }, function () {
-    document.getElementById(top).innerHTML = 'Dawn of';
+    document
+      .getElementById(top)
+      .innerHTML = 'Dawn of';
   });
 
   // this one has to come first, for finalHours() to work
-  document.getElementById(bottom).innerHTML = '-' + remains + ' Hours Remain-';
+  document
+    .getElementById(bottom)
+    .innerHTML = '-' + remains + ' Hours Remain-';
   if (today === 1) {
     day = 'First';
   } else if (today === 2) {
@@ -49,22 +57,26 @@ function mainLoad() {
   } else if ((~(isLeapYear()) & (today === 365)) | ((isLeapYear()) & (today === 366))) {
     var tempo;
     day = 'Final';
-    // we need to create callback function to check every second, if and only if
-    // the statement for the final day is true
+    // we need to create callback function to check every second, if and only if the
+    // statement for the final day is true
     timeCheck(function () {
       tempo = (60 * 2) + 46;
-      document.getElementById(bottom).innerHTML = '-<span id="time"></span> Time Remaining-';
+      document
+        .getElementById(bottom)
+        .innerHTML = '-<span id="time"></span> Time Remaining-';
       display = document.querySelector('#time');
       finalHours(tempo, display);
     }, function () {
-      // 01/01/2017 - the CountDownTimer keeps running if the condition for timeCheck is true
-      // please fix 
+      // 01/01/2017 - the CountDownTimer keeps running if the condition for timeCheck
+      // is true please fix
       CountDownTimer('01/01/2018 00:00 AM', bottom, false);
     });
   } else {
     day = today + 'th';
   }
-  document.getElementById(middle).innerHTML = 'The ' + day + ' Day';
+  document
+    .getElementById(middle)
+    .innerHTML = 'The ' + day + ' Day';
   fadeIn(top, 1);
   fadeIn(middle, 2);
   fadeIn(bottom, 3);
@@ -74,8 +86,8 @@ window.onload = function () {
   mainLoad();
 }
 
-//fade-in for texts, in which uses css to invoke "fill opacity" method by your reference,
-//one by one per Id
+// fade-in for texts, in which uses css to invoke "fill opacity" method by your
+// reference, one by one per Id
 function fadeIn(id, delay) {
   var elem = document.getElementById(id);
   setTimeout(function () {
@@ -86,10 +98,12 @@ function fadeIn(id, delay) {
   }, delay * 1000)
 }
 
-
 // time check until given especific time
 function timeCheck(finishCallback, waitingCallback) {
-  var d, h, m, s;
+  var d,
+    h,
+    m,
+    s;
   condition = false;
   var interval = setInterval(function () {
     d = new Date();
@@ -111,9 +125,11 @@ function timeCheck(finishCallback, waitingCallback) {
 
 //midDayCheck if it's the Dawn or Fall, needs correction
 function midDayCheck(finishCallback, waitingCallback) {
-  var d, h;
+  var d,
+    h;
   cond = false;
-  // var interval; this variable was used to clear the interval itself, I have other plans for it
+  // var interval; this variable was used to clear the interval itself, I have
+  // other plans for it
   setInterval(function () {
     d = new Date();
     h = d.getHours();
@@ -142,7 +158,8 @@ function dayNumber() {
   return day;
 }
 
-// getting remaining hours, real time is a must optional setting, this is just a test for now
+// getting remaining hours, real time is a must optional setting, this is just a
+// test for now
 
 function hoursRemain() {
   var totalHours = dayNumber() * 24;
@@ -165,7 +182,12 @@ function isLeapYear() {
 }
 
 function finalHours(duration, display) {
-  var audio, start, minutes, seconds, diff, firework;
+  var audio,
+    start,
+    minutes,
+    seconds,
+    diff,
+    firework;
   start = Date.now();
   firework = new Audio('./res/sounds/FireWorks.mp3');
   audio = new Audio('./res/sounds/FinalHours.mp3');
@@ -179,13 +201,17 @@ function finalHours(duration, display) {
     minutes = (diff / 60) | 0;
     seconds = (diff % 60) | 0;
 
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
+    minutes = minutes < 10 ?
+      "0" + minutes :
+      minutes;
+    seconds = seconds < 10 ?
+      "0" + seconds :
+      seconds;
     display.textContent = minutes + ":" + seconds;
 
     if (diff <= 0) {
-      // add one second so that the count down starts at the full duration
-      // example 02:46 not 02:45
+      // add one second so that the count down starts at the full duration example
+      // 02:46 not 02:45
       start = Date.now() + 1000;
     }
     if (minutes === 0 & seconds === 0) {
@@ -199,7 +225,12 @@ function finalHours(duration, display) {
 }
 // CountDownTimer('01/01/2017 00:00 AM', 'newYear');
 function CountDownTimer(dt, id, showDays) {
-  var end, _second, _minute, _hour, _day, timer;
+  var end,
+    _second,
+    _minute,
+    _hour,
+    _day,
+    timer;
   end = new Date(dt);
 
   _second = 1000;
@@ -208,7 +239,12 @@ function CountDownTimer(dt, id, showDays) {
   _day = _hour * 24;
 
   function showRemaining() {
-    var now, distance, days, hours, minutes, seconds;
+    var now,
+      distance,
+      days,
+      hours,
+      minutes,
+      seconds;
     now = new Date();
     distance = end - now;
     if (distance < 0) {
@@ -222,13 +258,23 @@ function CountDownTimer(dt, id, showDays) {
     seconds = Math.floor((distance % _minute) / _second);
 
     if (showDays) {
-      document.getElementById(id).innerHTML = '-' + days + 'Days ';
+      document
+        .getElementById(id)
+        .innerHTML = '-' + days + 'Days ';
     } else {
-      document.getElementById(id).innerHTML = '-';
+      document
+        .getElementById(id)
+        .innerHTML = '-';
     }
-    document.getElementById(id).innerHTML += hours + ' Hours ';
-    document.getElementById(id).innerHTML += minutes + ' Minutes ';
-    document.getElementById(id).innerHTML += seconds + ' Seconds Remains-';
+    document
+      .getElementById(id)
+      .innerHTML += hours + ' Hours ';
+    document
+      .getElementById(id)
+      .innerHTML += minutes + ' Minutes ';
+    document
+      .getElementById(id)
+      .innerHTML += seconds + ' Seconds Remains-';
     // document.getElementById(id).innerHTML = '--';
   }
   timer = setInterval(showRemaining, 1000);
