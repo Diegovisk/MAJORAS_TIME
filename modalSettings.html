@@ -1,23 +1,15 @@
 <!-- We are re-using this for a separate window, that's why it's here -->
 <!-- And of course, if we import this settings into index.html, it WILL BE overrided -->
-<!DOCTYPE html>
-<html lang="en">
+<!-- pay attentio to the "user" class, we need to specify that, 'cause we are setting
+     the entire body to be draggable-->
+<link rel="stylesheet" href="modalStyle.css">
 
-<head>
-  <title>Settings</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="modalStyle.css">
-</head>
-
-<body style="-webkit-app-region: drag;">
+<body id="modalBody" style="-webkit-app-region: drag;">
   <div id="menu" class="modal">
     <div id="content" class="modal-content">
-      <span class="close">&times;</span>
-      <h3>Teste modal</h2>
+      <span class="close user">&times;</span>
+      <h2>Teste modal</h2>
     </div>
   </div>
   <script src="modalScript.js"></script>
 </body>
-
-</html>
